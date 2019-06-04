@@ -1,0 +1,10 @@
+{
+    "name": "Wage",
+    "start_url": "https://wage.pm",
+    "description": "A marketplace that runs on trust (and lightning)",
+    "icons": [{
+      "src": "https://wage.pm/icon192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }]
+}

@@ -1,18 +1,32 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <LandingHero v-if="!loggedIn" />
+    <Dashboard v-if="loggedIn && user" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+
+import { mapState } from 'vuex'
+import LandingHero from '@/components/LandingHero.vue'
+import Dashboard from '@/components/Dashboard.vue'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    LandingHero,
+    Dashboard,
+  },
+  computed: {
+    ...mapState(['loggedIn', 'user'])
+  },
+  data: function () {
+    return {}
   }
 }
 </script>
+
+
+<style lang="scss" scoped>
+
+</style>

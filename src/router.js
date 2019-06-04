@@ -1,10 +1,12 @@
 import Vue from 'vue'
+import store from './store'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+
+import Home from '@/views/Home.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -16,10 +18,23 @@ export default new Router({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+      meta: { auth: true },
+      // route level code-splitting w/ hash generation each time its lazy loaded
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.auth)) {
+    if (!store.state.loggedIn && !localStorage.getItem("loggedIn")) {
+      next({ path: '/' })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
+export default router
